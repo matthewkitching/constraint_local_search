@@ -16,19 +16,21 @@ At a high level, the problem is modeled as a set of variables and a set of const
 ### Variables
 A variable has a domain of possible values, and a current state. Currently, domains are only implemented as sets of integers, and a current state as a single integer. A variable is able to move between states.
 ###Constraint
-A constraint is defined as a relation over a set of variables. Given the set of variables and the current state of these variables, a constraint is either satisfied or unsatisfied. The violation degree is the number of moves needed to satisfy the constraint. For example, an AllDifferent constraint is satisfied if all the variables of the constraint have different values. Suppose the six variables in the constraint has the following states:
+A constraint is defined as a relation over a set of variables. Given the set of variables and the current state of these variables, a constraint is either satisfied or unsatisfied. The violation degree is the number of moves needed to satisfy the constraint.
+
+For example, an AllDifferent constraint is satisfied if all the variables of the constraint have different values. Suppose the six variables in the constraint have the following states:
 
 ```
-AllDifferent Constraint [V1=1 V2=2 V3=2 V4=2 V5=3 V6=3]
+AllDifferent with variables: [V1=1 V2=2 V3=2 V4=2 V5=3 V6=3]
 ```
-Here the AllDifferent constraint is violated because V2, V3, and V4 have the same value, and V5 and V6 have the same values. The violation degree is 3, since you would have to move and two of the variables (V2, V3, and V4), and any one of the variables (V5, V6).
+Here the AllDifferent constraint is violated because V2, V3, and V4 have the same value, and V5 and V6 have the same values. The violation degree is 3, since you would have to move any two of the variables (V2, V3, and V4), and any one of the variables (V5, V6) to new values in order to satisfy the AllDifferent constraint.
 
 A constraint maintains properties such as its satisfiability, its violation degree, and how much each of its underlying variables contribute to the violations. It can be queried to evaluate the effect of local moves on these properties.
 
-Often in order for Local Search to be efficient, the violation degree must be updated, rather than recalculated.
+In order for Constraint Based Local Search to be efficient, the violation degree must be incremented, rather than recalculated if the recalculation is time consuming.
 
 ## Problem
-The problem is modeled as a set of variables and a set of constraints over these variables. The problem also has the total violation degree, which is the total of all the violation degree of all it's constraints. When the violation degree is zero, the problem is solved.
+The problem is modeled as a set of variables and a set of constraints over these variables. The problem also has the total violation degree, which is the total of the violation degree of all it's constraints. When the violation degree of the problem is zero, the problem is solved.
 
 ## Moves
 Currently, the only type of move implemented is a simple change of a variable state. The local search selects the move that will decreases the violation degree of the problem. In order for Local Search to be efficient, the selection of a variable must made efficiently.
