@@ -1,2 +1,0 @@
-def test_possible_moves():
-    assertTrue(False)
