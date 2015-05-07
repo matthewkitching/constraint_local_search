@@ -1,16 +1,18 @@
-from constraints.base_constraint import AllEqual, AllDifferent
+from constraints.allequal import AllEqual
+from constraints.alldiff import AllDifferent
 from state.variables import Variable
 from state.domain import ListDomain
+
 
 class TestAllEqual(object):
     def setUp(self):
         self.variables = [
-            Variable('id1', ListDomain([1,2,3,4]), 1),
-            Variable('id2', ListDomain([1,2,3,4]), 2),
-            Variable('id3', ListDomain([1,2,3,4]), 2),
-            Variable('id4', ListDomain([1,2,3,4]), 2),
-            Variable('id5', ListDomain([1,2,3,4]), 3),
-            Variable('id6', ListDomain([1,2,3,4]), 3),
+            Variable('id1', ListDomain([1, 2, 3, 4]), 1),
+            Variable('id2', ListDomain([1, 2, 3, 4]), 2),
+            Variable('id3', ListDomain([1, 2, 3, 4]), 2),
+            Variable('id4', ListDomain([1, 2, 3, 4]), 2),
+            Variable('id5', ListDomain([1, 2, 3, 4]), 3),
+            Variable('id6', ListDomain([1, 2, 3, 4]), 3),
         ]
 
     def test_calculate_move_necessary(self):
@@ -49,8 +51,7 @@ class TestAllEqual(object):
             self.variables[1], 1
         )
         assert(delta == 1)
-                                
-        
+
     def test_get_delta_from_best_tied(self):
         self.variables[0].make_move(3)
         all_equal = AllEqual(self.variables)
@@ -62,15 +63,15 @@ class TestAllEqual(object):
             self.variables[0], 2
         )
         assert(delta == -1)
-                
+
     def test_make_move_better_move(self):
-         all_equal = AllEqual(self.variables)
-         all_equal.make_move(self.variables[5], 2)
-         assert(all_equal.score_count[1] == 1)
-         assert(all_equal.score_count[2] == 4)
-         assert(all_equal.score_count[3] == 1)
-         assert(all_equal.max_value == 2)
-         assert(all_equal.max_count == 4)
+        all_equal = AllEqual(self.variables)
+        all_equal.make_move(self.variables[5], 2)
+        assert(all_equal.score_count[1] == 1)
+        assert(all_equal.score_count[2] == 4)
+        assert(all_equal.score_count[3] == 1)
+        assert(all_equal.max_value == 2)
+        assert(all_equal.max_count == 4)
 
     def test_make_tied_move_better_move(self):
         all_equal = AllEqual(self.variables)
@@ -93,21 +94,21 @@ class TestAllEqual(object):
         all_equal = AllEqual(self.variables)
         all_equal.make_move(self.variables[2], 3)
         assert(all_equal.score_count[1] == 1)
-        assert(all_equal.score_count[2] == 2) 
+        assert(all_equal.score_count[2] == 2)
         assert(all_equal.score_count[3] == 3)
         assert(all_equal.max_value == 3)
         assert(all_equal.max_count == 3)
-                                                                                        
+
 
 class TestAllDiff(object):
     def setUp(self):
         self.variables = [
-            Variable('id1', ListDomain([1,2,3,4]), 1),
-            Variable('id2', ListDomain([1,2,3,4]), 2),
-            Variable('id3', ListDomain([1,2,3,4]), 2),
-            Variable('id4', ListDomain([1,2,3,4]), 2),
-            Variable('id5', ListDomain([1,2,3,4]), 3),
-            Variable('id6', ListDomain([1,2,3,4]), 3),
+            Variable('id1', ListDomain([1, 2, 3, 4]), 1),
+            Variable('id2', ListDomain([1, 2, 3, 4]), 2),
+            Variable('id3', ListDomain([1, 2, 3, 4]), 2),
+            Variable('id4', ListDomain([1, 2, 3, 4]), 2),
+            Variable('id5', ListDomain([1, 2, 3, 4]), 3),
+            Variable('id6', ListDomain([1, 2, 3, 4]), 3),
         ]
 
     def test_calculate_move_necessary(self):
@@ -119,7 +120,7 @@ class TestAllDiff(object):
 
     def test_delta_from_multiple_to_new(self):
         all_diff = AllDifferent(self.variables)
-        delta = all_diff.get_delta_moves_necessary(self.variables[1], 4)  
+        delta = all_diff.get_delta_moves_necessary(self.variables[1], 4)
         assert(delta == -1)
 
     def test_delta_from_multiple_to_multiple(self):
